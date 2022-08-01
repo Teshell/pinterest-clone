@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import pins from "../assets/data/pins";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 
 const PinScreen = () => {
   const [ratio, setRatio] = useState(1);
@@ -38,6 +39,7 @@ const PinScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
+      <StatusBar style="light" />
       <View style={styles.root}>
         <Image
           source={{ uri: pin.image }}
@@ -60,6 +62,7 @@ const PinScreen = () => {
 const styles = StyleSheet.create({
   root: {
     height: "100%",
+    backgroundColor: "black",
   },
   image: {
     width: "100%",
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
     lineHeight: 35,
+    color: "white",
   },
 
   backBtn: {

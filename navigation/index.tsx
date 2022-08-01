@@ -116,10 +116,11 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Profile"
         component={TabTwoScreen}
         options={{
-          title: "Tab Two",
+          title: "Profile",
+          headerTitleAlign: "center",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
