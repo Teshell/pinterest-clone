@@ -29,6 +29,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import PinScreen from "../screens/PinScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import CreatePinScreen from "../screens/CreatePinScreen";
 
 export default function Navigation({
   colorScheme,
@@ -109,7 +110,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="CreatePin"
-        component={TabTwoScreen}
+        component={CreatePinScreen}
         options={{
           title: "Create Pin",
           headerTitleAlign: "center",
