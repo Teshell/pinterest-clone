@@ -1,6 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Pin from "./Pin";
+import { useWindowDimensions } from "react-native";
 
 interface IMasonryList {
   pins: {
@@ -11,30 +12,22 @@ interface IMasonryList {
 }
 
 const MasonryList = ({ pins }: IMasonryList) => {
+  const width = useWindowDimensions().width;
+
+  const numColumns = width < 500 ? 2 : 3;
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        {/* 1st column */}
-        <View style={styles.column}>
-          {/* <Pin pin={pins[0]} />
-          <Pin pin={pins[2]} />
-          <Pin pin={pins[3]} /> */}
-
-          {pins
-            .filter((_, index) => index % 2 === 0)
-            .map((pin) => (
-              <Pin pin={pin} key={pin.id} />
-            ))}
-        </View>
-
-        {/* 2nd column */}
-        <View style={styles.column}>
-          {pins
-            .filter((_, index) => index % 2 !== 0)
-            .map((pin) => (
-              <Pin pin={pin} key={pin.id} />
-            ))}
-        </View>
+        {Array.from(Array(numColumns)).map((_, colIndex) => (
+          <View style={styles.column}>
+            {pins
+              .filter((_, index) => index % numColumns === colIndex)
+              .map((pin) => (
+                <Pin pin={pin} key={pin.id} />
+              ))}
+          </View>
+        ))}
       </View>
     </ScrollView>
   );
