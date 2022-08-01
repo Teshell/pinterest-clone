@@ -10,20 +10,31 @@ import { View, Text } from "../components/Themed";
 import { Ionicons } from "@expo/vector-icons";
 
 import pins from "../assets/data/pins";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const PinScreen = () => {
-  const pin = pins[1];
   const [ratio, setRatio] = useState(1);
-
+  const navigation = useNavigation();
+  const route = useRoute();
   const insets = useSafeAreaInsets();
 
+  const pinId = route.params?.id;
+
+  const pin = pins.find((p) => p.id === pinId);
+
   useEffect(() => {
-    if (pin.image) {
-      Image.getSize(pin.image, (width, height) => setRatio(width / height));
+    if (pin?.image) {
+      Image.getSize(pin?.image, (width, height) => setRatio(width / height));
     }
   }, [pin]);
 
-  const goBack = () => {};
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  if (!pin) {
+    return <Text>Pin Not Found!</Text>;
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
