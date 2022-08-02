@@ -12,14 +12,13 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/HomeScreen";
-import TabTwoScreen from "../screens/ProfileScreen";
+
 import {
   RootStackParamList,
   RootTabParamList,
@@ -30,6 +29,7 @@ import PinScreen from "../screens/PinScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CreatePinScreen from "../screens/CreatePinScreen";
+import AuthStackNavigator from "./AuthStackNavigator";
 
 export default function Navigation({
   colorScheme,
@@ -55,6 +55,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Auth"
+        component={AuthStackNavigator}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
