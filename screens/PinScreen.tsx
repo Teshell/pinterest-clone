@@ -32,6 +32,7 @@ query MyQuery ($id: uuid!) {
 const PinScreen = () => {
   const [ratio, setRatio] = useState(1);
   const [pin, setPin] = useState<any>(null);
+  const [imageUri, setImageUri] = useState("");
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -50,15 +51,29 @@ const PinScreen = () => {
     }
   };
 
-  useEffect(() => {
-    fetchPin(pinId);
-  }, []);
+  const fetchImage = async () => {
+    const result = await nhost.storage.getPresignedUrl({
+      fileId: pin.image,
+    });
+
+    if (result.presignedUrl?.url) {
+      setImageUri(result.presignedUrl.url);
+    }
+  };
 
   useEffect(() => {
-    if (pin?.image) {
-      Image.getSize(pin?.image, (width, height) => setRatio(width / height));
-    }
+    fetchPin(pinId);
+  }, [pinId]);
+
+  useEffect(() => {
+    fetchImage();
   }, [pin]);
+
+  useEffect(() => {
+    if (imageUri) {
+      Image.getSize(imageUri, (width, height) => setRatio(width / height));
+    }
+  }, [imageUri]);
 
   const goBack = () => {
     navigation.goBack();
@@ -73,7 +88,7 @@ const PinScreen = () => {
       <StatusBar style="light" />
       <View style={styles.root}>
         <Image
-          source={{ uri: pin.image }}
+          source={{ uri: imageUri }}
           style={[styles.image, { aspectRatio: ratio }]}
         />
 

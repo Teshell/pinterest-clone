@@ -11,6 +11,8 @@ import SocialSignInButtons from "../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { View } from "../../../components/Themed";
+import { useNhostClient } from "@nhost/react";
+import { Alert } from "react-native";
 
 const SignInScreen = () => {
   const { height } = useWindowDimensions();
@@ -18,10 +20,19 @@ const SignInScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSignInPressed = () => {
-    console.log(data);
-    // validate user
-    // navigation.navigate('Home');
+  const nhost = useNhostClient();
+
+  const onSignInPressed = async () => {
+    const result = await nhost.auth.signIn({
+      email,
+      password,
+    });
+
+    if (result.error) {
+      Alert.alert("Error", result.error.message);
+    }
+
+    console.log(result);
   };
 
   const onForgotPasswordPressed = () => {
